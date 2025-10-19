@@ -4,153 +4,312 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nicotine Versions of Cover | Anshuman Pati</title>
-
-<!-- Fonts & Icons -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
+/* --- RESET + GENERAL --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Inter', sans-serif;
   background: linear-gradient(180deg, #333, #111);
-  color: #ccc;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  color: #e0e0e0;
   min-height: 100vh;
-}
-
-.container {
-  max-width: 1000px;
-  width: 90%;
-  background: #111;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-  border-radius: 12px;
-  overflow: hidden;
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
 }
 
+/* --- CONTAINER --- */
+.container {
+  max-width: 1100px;
+  width: 100%;
+  background: #111;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+}
+
+/* --- LEFT PANEL --- */
 .left {
-  flex: 2 1 480px;
+  padding: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem;
-  box-sizing: border-box;
+  gap: 2rem;
+  background: linear-gradient(135deg, rgba(0, 20, 40, 0.3) 0%, rgba(0, 10, 20, 0.5) 100%);
 }
+
+.header { text-align: center; width: 100%; }
+.header h1 {
+  font-size: 1.75rem; font-weight: 700;
+  background: linear-gradient(135deg, #00ffff 0%, #00cccc 50%, #0099ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+.header p { color: #888; font-size: 0.9rem; }
 
 .album-art {
-  width: 100%;
-  max-width: 400px;
-  border-radius: 8px;
-  overflow: hidden;
-  margin-bottom: 1rem;
-  box-shadow: 0 0 20px rgba(0,255,255,0.3);
+  width: 100%; max-width: 320px;
+  border-radius: 12px; overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,255,255,0.2);
 }
-
 .album-art img {
-  width: 100%;
-  display: block;
+  width: 100%; display: block;
+  border-radius: 8px; aspect-ratio: 1;
+  object-fit: cover;
 }
 
-.player iframe {
-  width: 100%;
-  height: 300px;
-  border: none;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0,255,255,0.3);
+/* --- PLAYER CONTROLS --- */
+.player-controls {
+  position: relative;
+  width: 220px; height: 220px;
+  background: linear-gradient(0deg, #222, #111);
+  border-radius: 50%; border: solid 2px #000;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.2), 0 4px 8px rgba(0,0,0,0.4);
 }
+.player-controls .fa {
+  font-size: 1.3rem; position: absolute; cursor: pointer;
+  color: #999; transition: all 0.2s ease;
+}
+.player-controls .fa:hover {
+  color: cyan; text-shadow: 0 0 6px cyan; transform: scale(1.1);
+}
+.player-controls .fa.fa-play, .player-controls .fa.fa-pause {
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px; height: 100px;
+  border: solid 2px #000; border-radius: 50%;
+  background: linear-gradient(0deg, #111, #222);
+  line-height: 100px; text-align: center;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.2), 0 0 12px rgba(0,0,0,0.6);
+  font-size: 1.8rem;
+}
+.player-controls .fa.fa-repeat { top: 10%; left: 50%; transform: translateX(-50%); }
+.player-controls .fa.fa-fast-backward { top: 50%; left: 10%; transform: translateY(-50%); }
+.player-controls .fa.fa-fast-forward { top: 50%; right: 10%; transform: translateY(-50%); }
+.player-controls .fa.fa-random { bottom: 10%; left: 50%; transform: translateX(-50%); }
 
+/* --- TRACK INFO --- */
+.track-info { width: 100%; text-align: center; color: #999; font-size: 0.95rem; }
+.track-info .title { margin-bottom: 0.75rem; font-weight: 600; }
+
+.progress-container { width: 100%; padding: 0 1rem; }
+.progress-bar {
+  position: relative; height: 0.6rem;
+  background: #000; border-radius: 10px;
+  box-shadow: inset 0 -1px 1px rgba(255,255,255,0.2);
+  overflow: hidden; cursor: pointer; margin-bottom: 0.5rem;
+}
+.progress { position: absolute; top: 50%; left: 0;
+  transform: translateY(-50%); height: 0.3rem; width: 0%;
+  background: cyan; border-radius: 10px;
+  box-shadow: 0 0 4px cyan; transition: width 0.1s linear;
+}
+.time-display { display: flex; justify-content: space-between; font-size: 0.85rem; color: #666; }
+
+/* --- RIGHT PANEL --- */
 .right {
-  flex: 1 1 300px;
   background: #000;
-  padding: 1rem 1.5rem;
-  box-sizing: border-box;
+  padding: 3rem 2rem;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
 }
+.queue-header { margin-bottom: 1.5rem; border-bottom: 2px solid rgba(0,255,255,0.2); padding-bottom: 1rem; }
+.queue-header h2 { color: #00ffff; font-size: 1.5rem; font-weight: 700; text-shadow: 0 0 20px rgba(0,255,255,0.4); }
 
-h2 {
-  text-align: center;
-  color: cyan;
-  margin-top: 0;
-  margin-bottom: 1rem;
-  text-shadow: 0 0 8px cyan;
-}
-
-.queue {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
+.queue { display: flex; flex-direction: column; gap: 0.75rem; overflow-y: auto; max-height: 600px; padding-right: 0.5rem; }
 .queue-item {
-  padding: 0.8rem 1rem;
-  border: 1px solid #222;
-  border-radius: 8px;
-  background: #111;
-  color: #ccc;
-  cursor: pointer;
-  transition: 0.3s;
+  padding: 1rem 1.25rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px; color: #b0b0b0;
+  cursor: pointer; transition: all 0.3s ease;
 }
+.queue-item:hover { color: cyan; border-color: rgba(0,255,255,0.4); box-shadow: 0 4px 16px rgba(0,255,255,0.15); transform: translateX(4px); }
+.queue-item.active { background: rgba(0,255,255,0.1); color: cyan; border-color: rgba(0,255,255,0.5); }
 
-.queue-item:hover {
-  color: cyan;
-  text-shadow: 0 0 6px cyan;
-  border-color: cyan;
+/* --- RESPONSIVE --- */
+@media (max-width: 968px) {
+  .container { grid-template-columns: 1fr; }
+  .left, .right { padding: 2rem 1.5rem; }
 }
-
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
-  .player iframe {
-    height: 200px;
-  }
+@media (max-width: 640px) {
+  body { padding: 1rem; }
+  .player-controls { width: 180px; height: 180px; }
+  .player-controls .fa.fa-play, .player-controls .fa.fa-pause { width: 80px; height: 80px; line-height: 80px; font-size: 1.5rem; }
 }
 </style>
 </head>
-
 <body>
+
 <div class="container">
   <div class="left">
+    <div class="header">
+      <h1>Nicotine Versions</h1>
+      <p>by Anshuman Pati</p>
+    </div>
+
     <div class="album-art">
-      <!-- Playlist cover from SoundCloud embed -->
-      <img id="album-cover" src="https://i1.sndcdn.com/artworks-000813684535-c7v0iq-t500x500.jpg" alt="Playlist Cover">
+      <img src="https://i.ibb.co/j9pcFq03/cover.jpg" alt="Nicotine Versions Album Art">
     </div>
-    <div class="player">
-      <iframe id="soundcloud-player" scrolling="no" frameborder="no" allow="autoplay"
-        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/anshuman-pati-485839839/sets/nicotine-versions-of-cover&color=%23111&auto_play=false&show_artwork=true">
-      </iframe>
+
+    <div class="player-controls">
+      <i class="fa fa-repeat" id="repeat-btn"></i>
+      <i class="fa fa-fast-backward" id="prev-btn"></i>
+      <i class="fa fa-play" id="play-btn"></i>
+      <i class="fa fa-fast-forward" id="next-btn"></i>
+      <i class="fa fa-random" id="shuffle-btn"></i>
     </div>
+
+    <div class="track-info">
+      <div class="title" id="current-track">Select a track to play</div>
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"><div class="progress" id="progress"></div></div>
+        <div class="time-display">
+          <span id="current-time">0:00</span>
+          <span id="duration">0:00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden SoundCloud widget -->
+    <iframe id="sc-widget" width="0" height="0" frameborder="no" allow="autoplay"
+      style="display:none;"
+      src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/anshuman-pati-485839839/tai-wan-liao-yi-de-lai-jing-en-su-xiu-ping-zheng-yu-cen-yin-zhi-hao-shu-lin-gao-zhong-bi-ye-slightly-diffrent-1&color=%2300ffff&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false">
+    </iframe>
   </div>
 
   <div class="right">
-    <h2>Queue</h2>
+    <div class="queue-header"><h2>Queue</h2></div>
     <div class="queue">
-      <div class="queue-item" data-url="https://soundcloud.com/anshuman-pati-485839839/taiwan">1. 台灣 廖益德+賴靖恩+蘇琇萍+鄭羽岑+殷志豪 樹林高中畢業 (slightly different)</div>
-      <div class="queue-item" data-url="https://soundcloud.com/anshuman-pati-485839839/ghost-of-you">2. Ghost of You (a cover for her)</div>
-      <div class="queue-item" data-url="https://soundcloud.com/anshuman-pati-485839839/make-you-mine">3. Make You Mine (slightly different)</div>
-      <div class="queue-item" data-url="https://soundcloud.com/anshuman-pati-485839839/blue">4. Blue (slightly different)</div>
-      <div class="queue-item" data-url="https://soundcloud.com/anshuman-pati-485839839/are-you-bored-yet">5. Are You Bored Yet? (slightly different)</div>
+      <div class="queue-item" data-url="https://soundcloud.com/anshuman-pati-485839839/tai-wan-liao-yi-de-lai-jing-en-su-xiu-ping-zheng-yu-cen-yin-zhi-hao-shu-lin-gao-zhong-bi-ye-slightly-diffrent-1?in=anshuman-pati-485839839/sets/nicotine-versions-of-cover&si=fb23d86a7c6347329f893a964a901adb&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing">1. 台灣 廖益德+賴靖恩+蘇琇萍+鄭羽岑+殷志豪 樹林高中畢業 (slightly different)</div>
+      <div class="queue-item" data-url="https://soundcloud.com/anshuman-pati-485839839/ghost-of-youa-cover-for-her-2?in=anshuman-pati-485839839/sets/nicotine-versions-of-cover&si=4131e3aa809146a1a3c362a95f5cbd6a&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing">2. Ghost of You (a cover for her)</div>
+      <div class="queue-item" data-url="https://soundcloud.com/anshuman-pati-485839839/make-you-mine-slightly-diffrent-3?in=anshuman-pati-485839839/sets/nicotine-versions-of-cover&si=e190ab3531a04a869308ad667fe823d5&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing">3. Make You Mine (slightly different)</div>
+      <div class="queue-item" data-url="https://soundcloud.com/anshuman-pati-485839839/blue-slighly-diffrent-4?in=anshuman-pati-485839839/sets/nicotine-versions-of-cover&si=671b0f726d444dd9bf9565f633378faa&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing">4. Blue (slightly different)</div>
+      <div class="queue-item" data-url="https://soundcloud.com/anshuman-pati-485839839/are-you-bored-yet-slightlly-diffrent-5?in=anshuman-pati-485839839/sets/nicotine-versions-of-cover&si=d4da96b73ba946379b0f475feb5d3f24&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing">5. Are You Bored Yet? (slightly different)</div>
     </div>
   </div>
 </div>
 
+<script src="https://w.soundcloud.com/player/api.js"></script>
 <script>
 const queueItems = document.querySelectorAll('.queue-item');
-const player = document.getElementById('soundcloud-player');
+const playBtn = document.getElementById('play-btn');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const repeatBtn = document.getElementById('repeat-btn');
+const shuffleBtn = document.getElementById('shuffle-btn');
+const currentTrackEl = document.getElementById('current-track');
+const progressBar = document.getElementById('progress-bar');
+const progress = document.getElementById('progress');
+const currentTimeEl = document.getElementById('current-time');
+const durationEl = document.getElementById('duration');
 
-queueItems.forEach(item => {
-  item.addEventListener('click', () => {
-    const trackUrl = item.getAttribute('data-url');
-    const embedUrl = `https://w.soundcloud.com/player/?url=${encodeURIComponent(trackUrl)}&color=%23111&auto_play=true&show_artwork=true`;
-    player.src = embedUrl;
+const widget = SC.Widget(document.getElementById('sc-widget'));
+let isPlaying = false;
+let currentIndex = 0;
+let repeatMode = false;
+let shuffleMode = false;
+
+function formatTime(ms) {
+  const totalSeconds = Math.floor(ms / 1000);
+  const mins = Math.floor(totalSeconds / 60);
+  const secs = totalSeconds % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
+function updateTrackInfo() {
+  widget.getCurrentSound((sound) => {
+    if (sound) {
+      currentTrackEl.textContent = sound.title;
+      durationEl.textContent = formatTime(sound.duration);
+    }
   });
+}
+
+// --- PLAYER EVENT HANDLERS ---
+widget.bind(SC.Widget.Events.READY, () => {
+  widget.bind(SC.Widget.Events.PLAY, () => {
+    isPlaying = true;
+    playBtn.classList.replace('fa-play', 'fa-pause');
+    updateTrackInfo();
+  });
+
+  widget.bind(SC.Widget.Events.PAUSE, () => {
+    isPlaying = false;
+    playBtn.classList.replace('fa-pause', 'fa-play');
+  });
+
+  widget.bind(SC.Widget.Events.FINISH, () => {
+    if (repeatMode) widget.play();
+    else nextTrack();
+  });
+
+  widget.bind(SC.Widget.Events.PLAY_PROGRESS, (obj) => {
+    widget.getDuration((duration) => {
+      if (duration > 0) {
+        const percent = (obj.currentPosition / duration) * 100;
+        progress.style.width = percent + '%';
+        currentTimeEl.textContent = formatTime(obj.currentPosition);
+      }
+    });
+  });
+});
+
+// --- PLAY/PAUSE ---
+playBtn.addEventListener('click', () => {
+  widget.isPaused((paused) => paused ? widget.play() : widget.pause());
+});
+
+// --- NEXT/PREV ---
+function loadTrack(index) {
+  const trackUrl = queueItems[index].getAttribute('data-url');
+  widget.load(trackUrl, { auto_play: true });
+  currentIndex = index;
+  updateActiveTrack();
+}
+nextBtn.addEventListener('click', nextTrack);
+prevBtn.addEventListener('click', () => {
+  if (currentIndex > 0) loadTrack(currentIndex - 1);
+});
+function nextTrack() {
+  if (shuffleMode) {
+    const rand = Math.floor(Math.random() * queueItems.length);
+    loadTrack(rand);
+  } else if (currentIndex < queueItems.length - 1) {
+    loadTrack(currentIndex + 1);
+  }
+}
+
+// --- REPEAT / SHUFFLE TOGGLE ---
+repeatBtn.addEventListener('click', () => {
+  repeatMode = !repeatMode;
+  repeatBtn.style.color = repeatMode ? 'cyan' : '#999';
+});
+shuffleBtn.addEventListener('click', () => {
+  shuffleMode = !shuffleMode;
+  shuffleBtn.style.color = shuffleMode ? 'cyan' : '#999';
+});
+
+// --- QUEUE CLICK ---
+queueItems.forEach((item, i) => {
+  item.addEventListener('click', () => loadTrack(i));
+});
+function updateActiveTrack() {
+  queueItems.forEach((it, idx) => it.classList.toggle('active', idx === currentIndex));
+  updateTrackInfo();
+}
+
+// --- SEEK ---
+progressBar.addEventListener('click', (e) => {
+  const rect = progressBar.getBoundingClientRect();
+  const percent = (e.clientX - rect.left) / rect.width;
+  widget.getDuration((duration) => widget.seekTo(duration * percent));
 });
 </script>
 
